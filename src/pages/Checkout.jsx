@@ -1,4 +1,3 @@
-// src/pages/Checkout.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,30 +5,30 @@ export const Checkout = () => {
     const navigate = useNavigate();
     const [carrito, setCarrito] = useState([]);
     const [total, setTotal] = useState(0);
-    
-    // Nuevo estado para controlar el correo
     const [correo, setCorreo] = useState('');
 
     useEffect(() => {
-        const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+        const carritoGuardado = JSON.parse(localStorage.getItem('carrito') || localStorage.getItem('miCarrito')) || [];
         setCarrito(carritoGuardado);
         
-        const totalCalculado = carritoGuardado.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+        const totalCalculado = carritoGuardado.reduce((sum, item) => sum + (item.subtotal || (item.precio * item.cantidad)), 0);
         setTotal(totalCalculado);
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validación estricta del correo institucional
         if (!correo.endsWith('@duoc.cl') && !correo.endsWith('@profesor.duoc.cl')) {
             alert('Por favor, ingresa un correo institucional válido (@duoc.cl o @profesor.duoc.cl).');
-            return; // Detiene el pago si el correo no cumple
+            return;
         }
 
-        // Si pasa la validación, seguimos con el flujo
-        alert('Procesando pago con el banco...');
-        navigate('/'); 
+        localStorage.removeItem('carrito');
+        localStorage.removeItem('miCarrito');
+        
+        window.dispatchEvent(new Event('carritoActualizado'));
+
+        navigate('/compra-exitosa'); 
     };
 
     return (
@@ -113,7 +112,7 @@ export const Checkout = () => {
                             {carrito.map((item, index) => (
                                 <div key={index} className="d-flex justify-content-between mb-2 pb-2 border-bottom border-secondary">
                                     <span>{item.cantidad}x {item.nombre}</span>
-                                    <span>${(item.precio * item.cantidad).toLocaleString('es-CL')}</span>
+                                    <span>${(item.subtotal || (item.precio * item.cantidad)).toLocaleString('es-CL')}</span>
                                 </div>
                             ))}
                             <div className="d-flex justify-content-between mt-3 fw-bold fs-5">

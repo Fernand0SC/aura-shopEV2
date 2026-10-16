@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 export const Carrito = () => {
     const [carrito, setCarrito] = useState([]);
 
-    // Cargar el carrito desde localStorage al montar el componente
+    // Cargar el carrito desde localStorage (buscando en ambas llaves por compatibilidad)
     useEffect(() => {
-        const memoria = localStorage.getItem('miCarrito');
+        const memoria = localStorage.getItem('carrito') || localStorage.getItem('miCarrito');
         if (memoria) {
             try {
                 setCarrito(JSON.parse(memoria));
@@ -18,13 +18,15 @@ export const Carrito = () => {
 
     const vaciarCarrito = () => {
         if (window.confirm("¿Estás seguro de que quieres vaciar tu carrito?")) {
-            localStorage.setItem('miCarrito', JSON.stringify([]));
+            localStorage.removeItem('carrito');
+            localStorage.removeItem('miCarrito');
+            window.dispatchEvent(new Event('carritoActualizado'));
             setCarrito([]);
         }
     };
 
     // Calcular el total a pagar
-    const totalPagar = carrito.reduce((acc, prod) => acc + prod.subtotal, 0);
+    const totalPagar = carrito.reduce((acc, prod) => acc + (prod.subtotal || (prod.precio * prod.cantidad)), 0);
 
     return (
         <div className="container my-5" style={{ maxWidth: '800px' }}>
@@ -43,7 +45,7 @@ export const Carrito = () => {
                                 </small>
                             </div>
                             <div className="fw-bold text-info fs-5">
-                                ${producto.subtotal.toLocaleString('es-CL')}
+                                ${(producto.subtotal || (producto.precio * producto.cantidad)).toLocaleString('es-CL')}
                             </div>
                         </div>
                     ))

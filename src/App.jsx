@@ -12,6 +12,7 @@ import { Registro } from './pages/Registro';
 import { Nosotros } from './pages/Nosotros';
 import { Blogs } from './pages/Blogs';
 import { Checkout } from './pages/Checkout';
+import { CompraExitosa } from './pages/CompraExitosa';
 
 // Páginas del Administrador
 import { AdminHome } from './pages/AdminHome';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/nosotros" element={<ClientLayout><Nosotros /></ClientLayout>} />
         <Route path="/blogs" element={<ClientLayout><Blogs /></ClientLayout>} />
         <Route path="/checkout" element={<ClientLayout><Checkout /></ClientLayout>} />
+        <Route path="/compra-exitosa" element={<ClientLayout><CompraExitosa /></ClientLayout>} />
 
         {/*ADMINISTRADOR */}
         <Route path="/admin" element={<AdminHome />} />
