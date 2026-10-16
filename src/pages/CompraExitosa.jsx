@@ -1,15 +1,9 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const CompraExitosa = () => {
-    // se genera un número de orden aleatorio
-    const numeroOrden = Math.floor(Math.random() * 1000000);
-
-    useEffect(() => {
-        localStorage.removeItem('carrito');
-        
-        window.dispatchEvent(new Event('carritoActualizado'));
-    }, []);
+    // se genera un número de orden
+    const [numeroOrden] = useState(() => Math.floor(Math.random() * 1000000));
 
     return (
         <div className="container my-5 text-center">

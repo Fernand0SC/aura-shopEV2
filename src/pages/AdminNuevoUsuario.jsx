@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
+import { crearUsuario, ROLES } from '../data/db';
 
 export const AdminNuevoUsuario = () => {
     const navigate = useNavigate();
@@ -17,6 +18,12 @@ export const AdminNuevoUsuario = () => {
         // Validacion
         if (!nombre || !correo || !password || !rol) {
             alert('Por favor, completa todos los campos para registrar al usuario.');
+            return;
+        }
+
+        const resultado = crearUsuario({ nombre: nombre.trim(), correo: correo.trim(), password, rol });
+        if (!resultado.ok) {
+            alert(resultado.error);
             return;
         }
 
@@ -70,9 +77,7 @@ export const AdminNuevoUsuario = () => {
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                         >
                             <option value="">-- Seleccione un rol --</option>
-                            <option value="Administrador Supremo">Administrador</option>
-                            <option value="Editor de Productos">Editor de Productos</option>
-                            <option value="Soporte al Cliente">Soporte al Cliente</option>
+                            {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
                         </select>
                     </div>
                     

@@ -1,27 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
-import { productosIniciales } from '../data/db';
+import { obtenerProductos, eliminarProducto as borrarProducto } from '../data/db';
 
 export const AdminProductos = () => {
-    const [productos, setProductos] = useState([]);
-
-    useEffect(() => {
-        const productosGuardados = JSON.parse(localStorage.getItem('misProductos'));
-        if (productosGuardados) {
-            setProductos(productosGuardados);
-        } else {
-            setProductos(productosIniciales);
-            localStorage.setItem('misProductos', JSON.stringify(productosIniciales));
-        }
-    }, []);
+    const [productos, setProductos] = useState(obtenerProductos);
 
     // Funcion eliminar
     const eliminarProducto = (id, nombre) => {
         if (window.confirm(`¿Estás seguro de que deseas eliminar el producto "${nombre}"?`)) {
-            const nuevaLista = productos.filter(prod => prod.id !== id);
-            setProductos(nuevaLista); // Actualiza la pantalla
-            localStorage.setItem('misProductos', JSON.stringify(nuevaLista)); // Actualiza la memoria
+            borrarProducto(id);                 // actualiza la "base de datos"
+            setProductos(obtenerProductos());   // actualiza la pantalla
         }
     };
 
@@ -40,6 +29,7 @@ export const AdminProductos = () => {
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Categoría</th>
+                        <th>Stock</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -50,6 +40,7 @@ export const AdminProductos = () => {
                             <td>{prod.nombre}</td>
                             <td>${prod.precio.toLocaleString('es-CL')}</td>
                             <td style={{ textTransform: 'capitalize' }}>{prod.categoria}</td>
+                            <td style={{ color: prod.stock <= 5 ? '#dc3545' : 'inherit', fontWeight: prod.stock <= 5 ? 'bold' : 'normal' }}>{prod.stock}</td>
                             <td>
                                 {/* se envia el ID en la URL para saber cuál editar */}
                                 <Link to={`/admin/producto/editar/${prod.id}`} className="btn-editar">Editar</Link> |{' '}

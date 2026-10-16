@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { crearUsuario } from '../data/db';
 
 export const Registro = () => {
     const [run, setRun] = useState('');
@@ -10,6 +12,7 @@ export const Registro = () => {
     const [comuna, setComuna] = useState('');
 
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -56,8 +59,22 @@ export const Registro = () => {
         setErrors(newErrors);
 
         if (isValid) {
-            alert('¡Registro validado y exitoso!');
-            setRun(''); setNombre(''); setCorreo(''); setPassword(''); setTelefono(''); setRegion(''); setComuna('');
+            const resultado = crearUsuario({
+                run: run.trim(),
+                nombre: nombre.trim(),
+                correo: correo.trim(),
+                password: password.trim(),
+                telefono,
+                region,
+                comuna,
+                rol: 'Cliente',
+            });
+            if (!resultado.ok) {
+                setErrors({ correo: resultado.error });
+                return;
+            }
+            alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+            navigate('/login');
         }
     };
 

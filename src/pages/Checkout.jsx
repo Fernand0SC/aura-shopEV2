@@ -1,19 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCarrito } from '../context/CarritoContext';
 
 export const Checkout = () => {
     const navigate = useNavigate();
-    const [carrito, setCarrito] = useState([]);
-    const [total, setTotal] = useState(0);
+    const { items: carrito, total, vaciar } = useCarrito();
     const [correo, setCorreo] = useState('');
-
-    useEffect(() => {
-        const carritoGuardado = JSON.parse(localStorage.getItem('carrito') || localStorage.getItem('miCarrito')) || [];
-        setCarrito(carritoGuardado);
-        
-        const totalCalculado = carritoGuardado.reduce((sum, item) => sum + (item.subtotal || (item.precio * item.cantidad)), 0);
-        setTotal(totalCalculado);
-    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,10 +15,7 @@ export const Checkout = () => {
             return;
         }
 
-        localStorage.removeItem('carrito');
-        localStorage.removeItem('miCarrito');
-        
-        window.dispatchEvent(new Event('carritoActualizado'));
+        vaciar();
 
         navigate('/compra-exitosa'); 
     };

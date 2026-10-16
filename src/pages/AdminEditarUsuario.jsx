@@ -1,26 +1,26 @@
 // src/pages/AdminEditarUsuario.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
+import { obtenerUsuarioPorId, actualizarUsuario, ROLES } from '../data/db';
 
 export const AdminEditarUsuario = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     
-    const [nombre, setNombre] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [rol, setRol] = useState('');
+    const usuario = obtenerUsuarioPorId(id);
 
-    useEffect(() => {
-        const usuariosGuardados = JSON.parse(localStorage.getItem('misUsuarios')) || [];
-        const usuarioAEditar = usuariosGuardados.find(u => u.id === parseInt(id));
-        
-        if (usuarioAEditar) {
-            setNombre(usuarioAEditar.nombre);
-            setCorreo(usuarioAEditar.correo);
-            setRol(usuarioAEditar.rol);
-        }
-    }, [id]);
+    const [nombre, setNombre] = useState(usuario ? usuario.nombre : '');
+    const [correo, setCorreo] = useState(usuario ? usuario.correo : '');
+    const [rol, setRol] = useState(usuario ? usuario.rol : '');
+
+    if (!usuario) {
+        return (
+            <AdminLayout titulo="Editar Usuario">
+                <p>El usuario solicitado no existe.</p>
+            </AdminLayout>
+        );
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,16 +30,7 @@ export const AdminEditarUsuario = () => {
             return;
         }
 
-        const usuariosGuardados = JSON.parse(localStorage.getItem('misUsuarios')) || [];
-        
-        const listaActualizada = usuariosGuardados.map(user => {
-            if (user.id === parseInt(id)) {
-                return { ...user, nombre, correo, rol };
-            }
-            return user;
-        });
-
-        localStorage.setItem('misUsuarios', JSON.stringify(listaActualizada));
+        actualizarUsuario(id, { nombre: nombre.trim(), correo: correo.trim(), rol });
         alert('¡Usuario actualizado con éxito!');
         navigate('/admin/usuarios');
     };
@@ -73,9 +64,7 @@ export const AdminEditarUsuario = () => {
                             onChange={(e) => setRol(e.target.value)}
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                         >
-                            <option value="Administrador">Administrador</option>
-                            <option value="Editor de Productos">Editor de Productos</option>
-                            <option value="Soporte al Cliente">Soporte al Cliente</option>
+                            {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
                         </select>
                     </div>
                     <button type="submit" className="btn-submit">

@@ -1,32 +1,16 @@
 // src/pages/AdminUsuarios.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
+import { obtenerUsuarios, eliminarUsuario as borrarUsuario } from '../data/db';
 
 export const AdminUsuarios = () => {
-    const [usuarios, setUsuarios] = useState([]);
-
-    const usuariosIniciales = [
-        { id: 1, nombre: 'Fernando Serrano', correo: 'fernando@duoc.cl', rol: 'Administrador' },
-        { id: 2, nombre: 'Manuel', correo: 'manuel@duoc.cl', rol: 'Editor de Productos' },
-        { id: 3, nombre: 'Matias', correo: 'matias@duoc.cl', rol: 'Soporte al Cliente' }
-    ];
-
-    useEffect(() => {
-        const usuariosGuardados = JSON.parse(localStorage.getItem('misUsuarios'));
-        if (usuariosGuardados) {
-            setUsuarios(usuariosGuardados);
-        } else {
-            setUsuarios(usuariosIniciales);
-            localStorage.setItem('misUsuarios', JSON.stringify(usuariosIniciales));
-        }
-    }, []);
+    const [usuarios, setUsuarios] = useState(obtenerUsuarios);
 
     const eliminarUsuario = (id, nombre) => {
         if (window.confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
-            const nuevaLista = usuarios.filter(user => user.id !== id);
-            setUsuarios(nuevaLista);
-            localStorage.setItem('misUsuarios', JSON.stringify(nuevaLista));
+            borrarUsuario(id);
+            setUsuarios(obtenerUsuarios());
         }
     };
 

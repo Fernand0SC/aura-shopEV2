@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSesion } from '../context/SesionContext';
+import { esRolAdmin } from '../data/db';
 
 export const Login = () => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [errCorreo, setErrCorreo] = useState('');
     const [errPassword, setErrPassword] = useState('');
+    const [errLogin, setErrLogin] = useState('');
+    const { iniciarSesion } = useSesion();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -37,8 +41,13 @@ export const Login = () => {
         }
 
         if (isValid) {
-            // Redirige al panel de administración
-            navigate('/admin');
+            const usuario = iniciarSesion(correo.trim(), password);
+            if (!usuario) {
+                setErrLogin('Correo o contraseña incorrectos.');
+                return;
+            }
+            setErrLogin('');
+            navigate(esRolAdmin(usuario.rol) ? '/admin' : '/');
         }
     };
 
@@ -68,6 +77,7 @@ export const Login = () => {
                         />
                         {errPassword && <small className="text-danger d-block mt-1">{errPassword}</small>}
                     </div>
+                    {errLogin && <div className="alert alert-danger py-2">{errLogin}</div>}
                     <button type="submit" className="btn btn-primary w-100 fw-bold">Iniciar Sesión</button>
                 </form>
             </div>

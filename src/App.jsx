@@ -15,6 +15,7 @@ import { Checkout } from './pages/Checkout';
 import { CompraExitosa } from './pages/CompraExitosa';
 
 // Páginas del Administrador
+import { RutaAdmin } from './components/RutaAdmin';
 import { AdminHome } from './pages/AdminHome';
 import { AdminProductos } from './pages/AdminProductos';
 import { AdminNuevoProducto } from './pages/AdminNuevoProducto';
@@ -51,13 +52,15 @@ function App() {
         <Route path="/compra-exitosa" element={<ClientLayout><CompraExitosa /></ClientLayout>} />
 
         {/*ADMINISTRADOR */}
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/productos" element={<AdminProductos />} />
-        <Route path="/admin/producto/nuevo" element={<AdminNuevoProducto />} />
-        <Route path="/admin/usuarios" element={<AdminUsuarios />} />
-        <Route path="/admin/usuario/nuevo" element={<AdminNuevoUsuario />} />
-        <Route path="/admin/producto/editar/:id" element={<AdminEditarProducto />} />
-        <Route path="/admin/usuario/editar/:id" element={<AdminEditarUsuario />} />
+        <Route element={<RutaAdmin />}>
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/productos" element={<AdminProductos />} />
+          <Route path="/admin/producto/nuevo" element={<AdminNuevoProducto />} />
+          <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+          <Route path="/admin/usuario/nuevo" element={<AdminNuevoUsuario />} />
+          <Route path="/admin/producto/editar/:id" element={<AdminEditarProducto />} />
+          <Route path="/admin/usuario/editar/:id" element={<AdminEditarUsuario />} />
+        </Route>
       </Routes>
     </Router>
   );
