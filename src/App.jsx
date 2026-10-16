@@ -15,6 +15,7 @@ import { Blogs } from './pages/Blogs';
 // Páginas del Administrador
 import { AdminHome } from './pages/AdminHome';
 import { AdminProductos } from './pages/AdminProductos';
+import { AdminNuevoProducto } from './pages/AdminNuevoProducto';
 
 //molde cliente (con Header y Footer)
 const ClientLayout = ({ children }) => (
@@ -44,6 +45,7 @@ function App() {
         {/*ADMINISTRADOR */}
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/productos" element={<AdminProductos />} />
+        <Route path="/admin/producto/nuevo" element={<AdminNuevoProducto />} />
       </Routes>
     </Router>
   );
