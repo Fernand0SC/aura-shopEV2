@@ -1,26 +1,40 @@
+// src/pages/AdminNuevoProducto.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
+import { productosIniciales } from '../data/db'; 
 
 export const AdminNuevoProducto = () => {
     const navigate = useNavigate();
-    
-    // Estados para guardar lo que el administrador escribe
     const [nombre, setNombre] = useState('');
     const [precio, setPrecio] = useState('');
     const [categoria, setCategoria] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Evita que la página se recargue
+        e.preventDefault();
         
-        // Validación 
         if (!nombre || !precio || !categoria) {
             alert('Por favor, completa todos los campos obligatorios.');
             return;
         }
 
-        alert(`¡Producto "${nombre}" simulado con éxito!`);
-        // Después de guardar, devolvemos al admin a la tabla de productos
+        // Traer los productos del localStorage
+        const productosGuardados = JSON.parse(localStorage.getItem('misProductos')) || productosIniciales;
+        
+        // Crear el nuevo producto
+        const nuevoProducto = {
+            id: productosGuardados.length > 0 ? productosGuardados[productosGuardados.length - 1].id + 1 : 1,
+            nombre: nombre,
+            precio: parseInt(precio), // Aseguramos que sea número
+            categoria: categoria,
+            img: 'default.png' // Imagen genérica para los nuevos
+        };
+
+        // Agregar a la lista y guardar en localStorage
+        const nuevaLista = [...productosGuardados, nuevoProducto];
+        localStorage.setItem('misProductos', JSON.stringify(nuevaLista));
+
+        alert(`¡Producto "${nombre}" guardado con éxito!`);
         navigate('/admin/productos');
     };
 
@@ -28,7 +42,6 @@ export const AdminNuevoProducto = () => {
         <AdminLayout titulo="Añadir Nuevo Producto">
             <div style={{ backgroundColor: '#fff', padding: '30px', borderRadius: '8px', color: '#333', maxWidth: '600px' }}>
                 <form onSubmit={handleSubmit}>
-                    
                     <div style={{ marginBottom: '15px' }}>
                         <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>Nombre del Producto:</label>
                         <input 
@@ -39,7 +52,6 @@ export const AdminNuevoProducto = () => {
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                         />
                     </div>
-
                     <div style={{ marginBottom: '15px' }}>
                         <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>Precio ($):</label>
                         <input 
@@ -50,7 +62,6 @@ export const AdminNuevoProducto = () => {
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                         />
                     </div>
-
                     <div style={{ marginBottom: '20px' }}>
                         <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>Categoría:</label>
                         <select 
@@ -64,7 +75,6 @@ export const AdminNuevoProducto = () => {
                             <option value="accesorios">Accesorios</option>
                         </select>
                     </div>
-                    
                     <button type="submit" className="btn-submit">
                         Guardar Producto
                     </button>

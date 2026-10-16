@@ -1,8 +1,22 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
 import { productosIniciales } from '../data/db';
 
 export const AdminProductos = () => {
+    // Estado para guardar la lista que se muestra en la tabla
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+        // Al cargar la página se busca en localStorage
+        const productosGuardados = JSON.parse(localStorage.getItem('misProductos'));
+        if (productosGuardados) {
+            setProductos(productosGuardados); 
+        } else {
+            setProductos(productosIniciales); 
+        }
+    }, []);
+
     return (
         <AdminLayout titulo="Gestión de Productos">
             <div style={{ marginBottom: '20px' }}>
@@ -22,7 +36,7 @@ export const AdminProductos = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {productosIniciales.map((prod) => (
+                    {productos.map((prod) => (
                         <tr key={prod.id}>
                             <td>P00{prod.id}</td>
                             <td>{prod.nombre}</td>
