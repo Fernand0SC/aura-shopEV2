@@ -19,6 +19,7 @@ import { AdminNuevoProducto } from './pages/AdminNuevoProducto';
 import { AdminUsuarios } from './pages/AdminUsuarios';
 import { AdminNuevoUsuario } from './pages/AdminNuevoUsuario';
 import { AdminEditarProducto } from './pages/AdminEditarProducto';
+import { AdminEditarUsuario } from './pages/AdminEditarUsuario';
 
 //molde cliente (con Header y Footer)
 const ClientLayout = ({ children }) => (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
         <Route path="/admin/usuario/nuevo" element={<AdminNuevoUsuario />} />
         <Route path="/admin/producto/editar/:id" element={<AdminEditarProducto />} />
+        <Route path="/admin/usuario/editar/:id" element={<AdminEditarUsuario />} />
       </Routes>
     </Router>
   );
