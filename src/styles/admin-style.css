@@ -1,0 +1,80 @@
+/* Reseteo básico */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+.admin-layout { display: flex; min-height: 100vh; }
+
+/* Menú Lateral */
+.sidebar { width: 250px; background-color: #f4f5f7; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+.brand { padding: 20px; border-bottom: 1px solid #ddd; }
+.admin-menu ul { list-style: none; padding: 20px 0; }
+.admin-menu ul li a { display: block; padding: 15px 20px; text-decoration: none; color: #333; font-weight: bold; }
+.admin-menu ul li a:hover, .admin-menu ul li a.active { background-color: #e2e6ea; color: #0056b3; }
+.btn-logout { color: red !important; }
+
+/* Contenido Central */
+.main-content { flex: 1; display: flex; flex-direction: column; }
+.top-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; border-bottom: 1px solid #ddd; }
+.content-area { padding: 30px; background-color: #ffffff; flex: 1; }
+
+/* Formularios y Listas */
+.admin-form { max-width: 500px; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+.error-msg { color: red; display: none; font-size: 12px; margin-top: 5px; }
+.btn-submit { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.btn-submit:hover { background-color: #0056b3; }
+
+.perfil-usuario h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 20px; }
+.perfil-usuario ul { list-style: none; margin-top: 10px; margin-bottom: 20px; }
+.perfil-usuario li { margin-bottom: 8px; }
+.img-producto-destacado {
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.mensaje-exito {
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+    display: none; 
+}
+
+.input-bloqueado {
+    background-color: #e9ecef;
+    cursor: not-allowed; 
+}
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.tabla-admin th, 
+.tabla-admin td {
+    border: 1px solid #ccc; 
+    padding: 10px;          
+    text-align: left;
+}
+
+.tabla-admin thead tr {
+    background-color: #f4f5f7; 
+}
+
+.btn-editar {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.btn-editar:hover {
+    text-decoration: underline;
+}
+
+.btn-eliminar {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+.btn-eliminar:hover {
+    text-decoration: underline;
+}

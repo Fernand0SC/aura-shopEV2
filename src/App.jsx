@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Componentes y Páginas del Cliente
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -10,25 +12,37 @@ import { Registro } from './pages/Registro';
 import { Nosotros } from './pages/Nosotros';
 import { Blogs } from './pages/Blogs';
 
+// Páginas del Administrador
+import { AdminHome } from './pages/AdminHome';
+
+//molde cliente (con Header y Footer)
+const ClientLayout = ({ children }) => (
+  <div className="d-flex flex-column min-vh-100 bg-dark text-white">
+    <Header />
+    <main className="flex-grow-1">
+      {children}
+    </main>
+    <Footer />
+  </div>
+);
+
 function App() {
   return (
     <Router>
-      <div className="d-flex flex-column min-vh-100 bg-dark text-white">
-        <Header />
-        <main className="flex-grow-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/productos" element={<Productos />} />
-            <Route path="/carrito" element={<Carrito />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/nosotros" element={<Nosotros />} />
-            <Route path="/blogs" element={<Blogs />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Routes>
+        {/*CLIENTE*/}
+        <Route path="/" element={<ClientLayout><Home /></ClientLayout>} />
+        <Route path="/productos" element={<ClientLayout><Productos /></ClientLayout>} />
+        <Route path="/carrito" element={<ClientLayout><Carrito /></ClientLayout>} />
+        <Route path="/contacto" element={<ClientLayout><Contacto /></ClientLayout>} />
+        <Route path="/login" element={<ClientLayout><Login /></ClientLayout>} />
+        <Route path="/registro" element={<ClientLayout><Registro /></ClientLayout>} />
+        <Route path="/nosotros" element={<ClientLayout><Nosotros /></ClientLayout>} />
+        <Route path="/blogs" element={<ClientLayout><Blogs /></ClientLayout>} />
+
+        {/*ADMINISTRADOR */}
+        <Route path="/admin" element={<AdminHome />} />
+      </Routes>
     </Router>
   );
 }
