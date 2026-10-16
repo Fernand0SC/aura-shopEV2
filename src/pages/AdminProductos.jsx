@@ -4,18 +4,26 @@ import { AdminLayout } from '../components/AdminLayout';
 import { productosIniciales } from '../data/db';
 
 export const AdminProductos = () => {
-    // Estado para guardar la lista que se muestra en la tabla
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        // Al cargar la página se busca en localStorage
         const productosGuardados = JSON.parse(localStorage.getItem('misProductos'));
         if (productosGuardados) {
-            setProductos(productosGuardados); 
+            setProductos(productosGuardados);
         } else {
-            setProductos(productosIniciales); 
+            setProductos(productosIniciales);
+            localStorage.setItem('misProductos', JSON.stringify(productosIniciales));
         }
     }, []);
+
+    // Funcion eliminar
+    const eliminarProducto = (id, nombre) => {
+        if (window.confirm(`¿Estás seguro de que deseas eliminar el producto "${nombre}"?`)) {
+            const nuevaLista = productos.filter(prod => prod.id !== id);
+            setProductos(nuevaLista); // Actualiza la pantalla
+            localStorage.setItem('misProductos', JSON.stringify(nuevaLista)); // Actualiza la memoria
+        }
+    };
 
     return (
         <AdminLayout titulo="Gestión de Productos">
@@ -43,13 +51,15 @@ export const AdminProductos = () => {
                             <td>${prod.precio.toLocaleString('es-CL')}</td>
                             <td style={{ textTransform: 'capitalize' }}>{prod.categoria}</td>
                             <td>
-                                <Link to="/admin/producto/editar" className="btn-editar">Editar</Link> |{' '}
-                                <a href="#" className="btn-eliminar" onClick={(e) => {
-                                    e.preventDefault();
-                                    alert('Función eliminar en construcción');
-                                }}>
+                                {/* se envia el ID en la URL para saber cuál editar */}
+                                <Link to={`/admin/producto/editar/${prod.id}`} className="btn-editar">Editar</Link> |{' '}
+                                <button 
+                                    className="btn-eliminar" 
+                                    style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#dc3545', padding: 0, font: 'inherit', textDecoration: 'underline' }} 
+                                    onClick={() => eliminarProducto(prod.id, prod.nombre)}
+                                >
                                     Eliminar
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     ))}
