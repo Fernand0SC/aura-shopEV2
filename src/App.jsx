@@ -11,6 +11,7 @@ import { Login } from './pages/Login';
 import { Registro } from './pages/Registro';
 import { Nosotros } from './pages/Nosotros';
 import { Blogs } from './pages/Blogs';
+import { Checkout } from './pages/Checkout';
 
 // Páginas del Administrador
 import { AdminHome } from './pages/AdminHome';
@@ -45,6 +46,7 @@ function App() {
         <Route path="/registro" element={<ClientLayout><Registro /></ClientLayout>} />
         <Route path="/nosotros" element={<ClientLayout><Nosotros /></ClientLayout>} />
         <Route path="/blogs" element={<ClientLayout><Blogs /></ClientLayout>} />
+        <Route path="/checkout" element={<ClientLayout><Checkout /></ClientLayout>} />
 
         {/*ADMINISTRADOR */}
         <Route path="/admin" element={<AdminHome />} />

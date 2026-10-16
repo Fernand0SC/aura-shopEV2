@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Carrito = () => {
     const [carrito, setCarrito] = useState([]);
@@ -59,9 +60,9 @@ export const Carrito = () => {
                 </button>
                 <div className="text-end">
                     <h3>TOTAL: <span className="text-info">${totalPagar.toLocaleString('es-CL')}</span></h3>
-                    <button className="btn btn-success btn-lg mt-2" disabled={carrito.length === 0}>
+                    <Link to="/checkout" className="btn btn-success">
                         Ir a Pagar
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
