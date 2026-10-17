@@ -5,14 +5,19 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Productos } from './pages/Productos';
+import { DetalleProducto } from './pages/DetalleProducto';
+import { Categorias } from './pages/Categorias';
+import { Ofertas } from './pages/Ofertas';
 import { Carrito } from './pages/Carrito';
 import { Contacto } from './pages/Contacto';
 import { Login } from './pages/Login';
 import { Registro } from './pages/Registro';
 import { Nosotros } from './pages/Nosotros';
 import { Blogs } from './pages/Blogs';
+import { DetalleBlog } from './pages/DetalleBlog';
 import { Checkout } from './pages/Checkout';
-import { CompraExitosa } from './pages/CompraExitosa';
+import { PagoCorrecto } from './pages/PagoCorrecto';
+import { PagoError } from './pages/PagoError';
 
 // Páginas del Administrador
 import { RutaAdmin } from './components/RutaAdmin';
@@ -42,14 +47,20 @@ function App() {
         {/*CLIENTE*/}
         <Route path="/" element={<ClientLayout><Home /></ClientLayout>} />
         <Route path="/productos" element={<ClientLayout><Productos /></ClientLayout>} />
+        <Route path="/producto/:id" element={<ClientLayout><DetalleProducto /></ClientLayout>} />
+        <Route path="/categorias" element={<ClientLayout><Categorias /></ClientLayout>} />
+        <Route path="/categorias/:slug" element={<ClientLayout><Categorias /></ClientLayout>} />
+        <Route path="/ofertas" element={<ClientLayout><Ofertas /></ClientLayout>} />
         <Route path="/carrito" element={<ClientLayout><Carrito /></ClientLayout>} />
         <Route path="/contacto" element={<ClientLayout><Contacto /></ClientLayout>} />
         <Route path="/login" element={<ClientLayout><Login /></ClientLayout>} />
         <Route path="/registro" element={<ClientLayout><Registro /></ClientLayout>} />
         <Route path="/nosotros" element={<ClientLayout><Nosotros /></ClientLayout>} />
         <Route path="/blogs" element={<ClientLayout><Blogs /></ClientLayout>} />
+        <Route path="/blogs/:id" element={<ClientLayout><DetalleBlog /></ClientLayout>} />
         <Route path="/checkout" element={<ClientLayout><Checkout /></ClientLayout>} />
-        <Route path="/compra-exitosa" element={<ClientLayout><CompraExitosa /></ClientLayout>} />
+        <Route path="/pago-correcto/:id" element={<ClientLayout><PagoCorrecto /></ClientLayout>} />
+        <Route path="/pago-error/:id" element={<ClientLayout><PagoError /></ClientLayout>} />
 
         {/*ADMINISTRADOR */}
         <Route element={<RutaAdmin />}>

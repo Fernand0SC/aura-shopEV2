@@ -13,12 +13,14 @@ export const Header = () => {
     };
 
     return (
-        <header className="bg-dark text-white p-3">
+        <header className="bg-dark text-white p-3 d-print-none">
             <div className="container d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <h1 className="h3 m-0">Aura Shop</h1>
                 <nav className="d-flex flex-wrap gap-3 align-items-center">
                     <Link to="/" className="text-white text-decoration-none">Home</Link>
                     <Link to="/productos" className="text-white text-decoration-none">Productos</Link>
+                    <Link to="/categorias" className="text-white text-decoration-none">Categorías</Link>
+                    <Link to="/ofertas" className="text-white text-decoration-none">Ofertas</Link>
                     <Link to="/nosotros" className="text-white text-decoration-none">Nosotros</Link>
                     <Link to="/blogs" className="text-white text-decoration-none">Blogs</Link>
                     <Link to="/contacto" className="text-white text-decoration-none">Contacto</Link>

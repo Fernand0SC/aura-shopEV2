@@ -1,4 +1,4 @@
-// src/pages/Blogs.jsx
+import { Link } from 'react-router-dom';
 import { blogsIniciales } from '../data/db';
 
 export const Blogs = () => {
@@ -8,8 +8,8 @@ export const Blogs = () => {
             {blogsIniciales.map(blog => (
                 <article key={blog.id} className="card bg-dark text-white border-secondary p-4 mb-4 shadow">
                     <h3 className="h5 text-info">{blog.titulo}</h3>
-                    <p className="text-light">{blog.resumen}</p> {/* <-- Cambiado a text-light */}
-                    <button className="btn btn-outline-info btn-sm align-self-start">VER CASO &rarr;</button>
+                    <p className="text-light">{blog.resumen}</p>
+                    <Link to={`/blogs/${blog.id}`} className="btn btn-outline-info btn-sm align-self-start">VER CASO &rarr;</Link>
                 </article>
             ))}
         </div>
