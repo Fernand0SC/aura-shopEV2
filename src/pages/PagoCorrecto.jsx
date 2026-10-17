@@ -15,10 +15,6 @@ export const PagoCorrecto = () => {
         );
     }
 
-    const enviarPorEmail = () => {
-        alert(`(Simulación) Boleta #${orden.numero} enviada a ${orden.cliente.correo}.`);
-    };
-
     return (
         <div className="container my-5" style={{ maxWidth: '800px' }}>
             <div className="card bg-dark text-white border-success shadow">
@@ -27,13 +23,11 @@ export const PagoCorrecto = () => {
                         <h2 className="text-success h3">✓ Se ha realizado la compra. nro #{orden.numero}</h2>
                         <small className="text-secondary">Fecha: {new Date(orden.fecha).toLocaleString('es-CL')}</small>
                     </div>
-                    <p className="text-secondary">Gracias por tu compra. Este es el detalle de tu boleta.</p>
+                    <p className="text-secondary">Gracias por tu compra. Este es el resumen de tu compra.</p>
 
                     <TablaOrden orden={orden} />
 
-                    <div className="d-flex gap-2 justify-content-center flex-wrap mt-4 d-print-none">
-                        <button className="btn btn-danger" onClick={() => window.print()}>Imprimir boleta en PDF</button>
-                        <button className="btn btn-success" onClick={enviarPorEmail}>Enviar boleta por email</button>
+                    <div className="text-center mt-4">
                         <Link to="/" className="btn btn-outline-light">Volver a la Tienda</Link>
                     </div>
                 </div>
