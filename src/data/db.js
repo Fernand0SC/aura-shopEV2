@@ -204,6 +204,20 @@ export function obtenerOrdenesPorUsuario(usuarioId) {
     return obtenerOrdenes().filter((o) => o.usuarioId === Number(usuarioId));
 }
 
+export function obtenerVentasPorProducto() {
+    const ventas = {};
+    obtenerOrdenes()
+        .filter((o) => o.estado === 'Pagada')
+        .forEach((o) => {
+            o.items.forEach((i) => {
+                if (!ventas[i.id]) ventas[i.id] = { id: i.id, nombre: i.nombre, unidades: 0, total: 0 };
+                ventas[i.id].unidades += i.cantidad;
+                ventas[i.id].total += i.precio * i.cantidad;
+            });
+        });
+    return Object.values(ventas).sort((a, b) => b.total - a.total);
+}
+
 // Número visible de la orden
 function generarNumeroOrden(id) {
     const hoy = new Date();

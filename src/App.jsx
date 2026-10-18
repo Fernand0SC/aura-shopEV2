@@ -34,6 +34,8 @@ import { AdminProductosCriticos } from './pages/AdminProductosCriticos';
 import { AdminCategorias } from './pages/AdminCategorias';
 import { AdminFormCategoria } from './pages/AdminFormCategoria';
 import { AdminHistorialCompras } from './pages/AdminHistorialCompras';
+import { AdminReportes } from './pages/AdminReportes';
+import { AdminPerfil } from './pages/AdminPerfil';
 
 //molde cliente (con Header y Footer)
 const ClientLayout = ({ children }) => (
@@ -84,6 +86,8 @@ function App() {
           <Route path="/admin/categoria/nueva" element={<AdminFormCategoria />} />
           <Route path="/admin/categoria/editar/:id" element={<AdminFormCategoria />} />
           <Route path="/admin/usuario/:id/historial" element={<AdminHistorialCompras />} />
+          <Route path="/admin/reportes" element={<AdminReportes />} />
+          <Route path="/admin/perfil" element={<AdminPerfil />} />
         </Route>
       </Routes>
     </Router>

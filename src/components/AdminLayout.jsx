@@ -26,6 +26,8 @@ export const AdminLayout = ({ children, titulo }) => {
                         <li><Link to="/admin/producto/nuevo">Nuevo Producto</Link></li>
                         <li><Link to="/admin/productos/criticos">Productos críticos</Link></li>
                         <li><Link to="/admin/categorias">Categorías</Link></li>
+                        <li><Link to="/admin/reportes">Reportes</Link></li>
+                        <li><Link to="/admin/perfil">Mi perfil</Link></li>
                         <li><Link to="/admin/usuarios">Ver todos los usuarios</Link></li>
                         <li><Link to="/admin/usuario/nuevo">Añadir Usuario Admin</Link></li>
                         <li><Link to="/" className="btn-logout" onClick={handleCerrarSesion}>Cerrar Sesión</Link></li>
