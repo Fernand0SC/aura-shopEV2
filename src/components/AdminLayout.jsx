@@ -21,6 +21,7 @@ export const AdminLayout = ({ children, titulo }) => {
                 <nav className="admin-menu">
                     <ul>
                         <li><Link to="/admin">Dashboard</Link></li>
+                        <li><Link to="/admin/ordenes">Órdenes y boletas</Link></li>
                         <li><Link to="/admin/productos">Ver todos los productos</Link></li>
                         <li><Link to="/admin/producto/nuevo">Nuevo Producto</Link></li>
                         <li><Link to="/admin/usuarios">Ver todos los usuarios</Link></li>

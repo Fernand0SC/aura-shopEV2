@@ -22,6 +22,8 @@ import { PagoError } from './pages/PagoError';
 // Páginas del Administrador
 import { RutaAdmin } from './components/RutaAdmin';
 import { AdminHome } from './pages/AdminHome';
+import { AdminOrdenes } from './pages/AdminOrdenes';
+import { AdminBoleta } from './pages/AdminBoleta';
 import { AdminProductos } from './pages/AdminProductos';
 import { AdminNuevoProducto } from './pages/AdminNuevoProducto';
 import { AdminUsuarios } from './pages/AdminUsuarios';
@@ -71,6 +73,8 @@ function App() {
           <Route path="/admin/usuario/nuevo" element={<AdminNuevoUsuario />} />
           <Route path="/admin/producto/editar/:id" element={<AdminEditarProducto />} />
           <Route path="/admin/usuario/editar/:id" element={<AdminEditarUsuario />} />
+          <Route path="/admin/ordenes" element={<AdminOrdenes />} />
+          <Route path="/admin/orden/:id" element={<AdminBoleta />} />
         </Route>
       </Routes>
     </Router>
