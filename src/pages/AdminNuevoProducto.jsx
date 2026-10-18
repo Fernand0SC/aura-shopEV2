@@ -1,8 +1,8 @@
-// src/pages/AdminNuevoProducto.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
-import { crearProducto } from '../data/db';
+import { crearProducto, obtenerCategorias } from '../data/db';
+
 
 export const AdminNuevoProducto = () => {
     const navigate = useNavigate();
@@ -64,9 +64,9 @@ export const AdminNuevoProducto = () => {
                         <select value={categoria} onChange={(e) => setCategoria(e.target.value)}
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
                             <option value="">-- Seleccione una categoría --</option>
-                            <option value="hardware">Hardware</option>
-                            <option value="perifericos">Periféricos</option>
-                            <option value="accesorios">Accesorios</option>
+                            {obtenerCategorias().map((c) => (
+                                <option key={c.id} value={c.id}>{c.nombre}</option>
+                            ))}
                         </select>
                     </div>
 

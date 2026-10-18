@@ -125,6 +125,12 @@ export function obtenerOfertas() {
     return obtenerProductos().filter((p) => p.oferta);
 }
 
+export const STOCK_CRITICO = 5;
+
+export function obtenerProductosCriticos() {
+    return obtenerProductos().filter((p) => p.stock <= STOCK_CRITICO);
+}
+
 export function crearProducto(datos) {
     const productos = obtenerProductos();
     const nuevo = { img: 'default.svg', stock: 0, oferta: false, ...datos, id: siguienteId(productos) };
@@ -144,7 +150,7 @@ export function eliminarProducto(id) {
     guardar(CLAVE_PRODUCTOS, obtenerProductos().filter((p) => p.id !== Number(id)));
 }
 
-//CATEGORÍAS 
+//CATEGORÍAS
 
 export function obtenerCategorias() {
     return leer(CLAVE_CATEGORIAS, categoriasIniciales);
@@ -152,6 +158,36 @@ export function obtenerCategorias() {
 
 export function obtenerCategoriaPorId(id) {
     return obtenerCategorias().find((c) => c.id === id) || null;
+}
+
+// El id de la categoría es su nombre sin tildes ni espacios
+function crearSlug(texto) {
+    return String(texto)
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+// Devuelve { ok: true } o { ok: false, error }
+export function crearCategoria({ nombre, descripcion = '' }) {
+    const id = crearSlug(nombre);
+    if (!id) return { ok: false, error: 'El nombre de la categoría no es válido.' };
+    if (obtenerCategoriaPorId(id)) return { ok: false, error: 'Ya existe una categoría con ese nombre.' };
+    guardar(CLAVE_CATEGORIAS, [...obtenerCategorias(), { id, nombre: nombre.trim(), descripcion }]);
+    return { ok: true };
+}
+
+// Al editar cambia el nombre visible y la descripción
+export function actualizarCategoria(id, { nombre, descripcion = '' }) {
+    const repetida = obtenerCategorias().some((c) => c.id !== id && crearSlug(c.nombre) === crearSlug(nombre));
+    if (repetida) return { ok: false, error: 'Ya existe una categoría con ese nombre.' };
+    guardar(CLAVE_CATEGORIAS, obtenerCategorias().map((c) =>
+        c.id === id ? { ...c, nombre: nombre.trim(), descripcion } : c
+    ));
+    return { ok: true };
 }
 
 //ÓRDENES DE COMPRA
@@ -162,6 +198,10 @@ export function obtenerOrdenes() {
 
 export function obtenerOrdenPorId(id) {
     return obtenerOrdenes().find((o) => o.id === Number(id)) || null;
+}
+
+export function obtenerOrdenesPorUsuario(usuarioId) {
+    return obtenerOrdenes().filter((o) => o.usuarioId === Number(usuarioId));
 }
 
 // Número visible de la orden

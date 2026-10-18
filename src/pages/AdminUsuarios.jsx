@@ -40,6 +40,7 @@ export const AdminUsuarios = () => {
                             <td>{user.correo}</td>
                             <td><span style={{ fontWeight: 'bold', color: '#17a2b8' }}>{user.rol}</span></td>
                             <td>
+                                <Link to={`/admin/usuario/${user.id}/historial`} className="btn-editar">Historial</Link> |{' '}
                                 <Link to={`/admin/usuario/editar/${user.id}`} className="btn-editar">Editar</Link> |{' '}
                                 <button 
                                     className="btn-eliminar" 

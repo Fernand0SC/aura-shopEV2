@@ -30,6 +30,10 @@ import { AdminUsuarios } from './pages/AdminUsuarios';
 import { AdminNuevoUsuario } from './pages/AdminNuevoUsuario';
 import { AdminEditarProducto } from './pages/AdminEditarProducto';
 import { AdminEditarUsuario } from './pages/AdminEditarUsuario';
+import { AdminProductosCriticos } from './pages/AdminProductosCriticos';
+import { AdminCategorias } from './pages/AdminCategorias';
+import { AdminFormCategoria } from './pages/AdminFormCategoria';
+import { AdminHistorialCompras } from './pages/AdminHistorialCompras';
 
 //molde cliente (con Header y Footer)
 const ClientLayout = ({ children }) => (
@@ -75,6 +79,11 @@ function App() {
           <Route path="/admin/usuario/editar/:id" element={<AdminEditarUsuario />} />
           <Route path="/admin/ordenes" element={<AdminOrdenes />} />
           <Route path="/admin/orden/:id" element={<AdminBoleta />} />
+          <Route path="/admin/productos/criticos" element={<AdminProductosCriticos />} />
+          <Route path="/admin/categorias" element={<AdminCategorias />} />
+          <Route path="/admin/categoria/nueva" element={<AdminFormCategoria />} />
+          <Route path="/admin/categoria/editar/:id" element={<AdminFormCategoria />} />
+          <Route path="/admin/usuario/:id/historial" element={<AdminHistorialCompras />} />
         </Route>
       </Routes>
     </Router>

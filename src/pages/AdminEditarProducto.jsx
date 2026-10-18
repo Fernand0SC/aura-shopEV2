@@ -1,8 +1,7 @@
-// src/pages/AdminEditarProducto.jsx
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
-import { obtenerProductoPorId, actualizarProducto } from '../data/db';
+import { obtenerProductoPorId, actualizarProducto, obtenerCategorias } from '../data/db';
 
 export const AdminEditarProducto = () => {
     const { id } = useParams(); 
@@ -74,9 +73,9 @@ export const AdminEditarProducto = () => {
                         <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>Categoría:</label>
                         <select value={categoria} onChange={(e) => setCategoria(e.target.value)}
                             style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
-                            <option value="hardware">Hardware</option>
-                            <option value="perifericos">Periféricos</option>
-                            <option value="accesorios">Accesorios</option>
+                            {obtenerCategorias().map((c) => (
+                                <option key={c.id} value={c.id}>{c.nombre}</option>
+                            ))}
                         </select>
                     </div>
 
